@@ -83,6 +83,8 @@ class ImageStepper extends StatelessWidget {
   //Space between Icon and Text
   final double iconAndTextSpacing;
 
+  final Color? backgroundColor;
+  
   /// Creates an ImageStepper widget.
   const ImageStepper({
     super.key, 
@@ -113,6 +115,7 @@ class ImageStepper extends StatelessWidget {
     this.textStyle,
     this.texts,
     this.iconAndTextSpacing = 0.0,
+    this.backgroundColor,
   });
 
   @override
@@ -155,6 +158,7 @@ class ImageStepper extends StatelessWidget {
       return CircleAvatar(
         radius: stepRadius,
         backgroundImage: images![index] as ImageProvider<Object>?,
+        backgroundColor: backgroundColor,
       );
     });
   }
