@@ -25,7 +25,7 @@ class NumberStepper extends StatelessWidget {
   final Axis direction;
 
   /// The style applied to numbers except the `fontSize` which is calculated automatically.
-  final TextStyle numberStyle;
+  final TextStyle? numberStyle;
 
   /// The color of the step when it is not reached.
   final Color? stepColor;
@@ -86,6 +86,7 @@ class NumberStepper extends StatelessWidget {
   //Space between Icon and Text
   final double iconAndTextSpacing;
 
+  final Color? backgroundColor;
   /// Creates a NumberStepper widget.
   const NumberStepper({
     super.key,
@@ -96,7 +97,7 @@ class NumberStepper extends StatelessWidget {
     this.nextButtonIcon,
     this.onStepReached,
     this.direction = Axis.horizontal,
-    this.numberStyle = const TextStyle(color: Colors.black),
+    this.numberStyle,
     this.stepColor,
     this.stepPadding = 0.0,
     this.activeStepColor,
@@ -117,6 +118,7 @@ class NumberStepper extends StatelessWidget {
     this.textStyle,
     this.texts,
     this.iconAndTextSpacing = 0.0,
+    this.backgroundColor,
   });
 
   @override
@@ -157,10 +159,24 @@ class NumberStepper extends StatelessWidget {
   /// Wraps the integer numbers in Text widget. User style is also applied except the `fontSize` which is calculated automatically.
   List<Widget> _numbersWrappedInText() {
     return List.generate(numbers!.length, (index) {
-      return FittedBox(
-        child: Text(
-          '${numbers![index]}',
-          style: numberStyle.copyWith(fontSize: stepRadius / 1.1),
+      return Container(
+        width: stepRadius * 2,
+        height: stepRadius * 2,
+        decoration: new BoxDecoration(
+          color: backgroundColor ?? Colors.white,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            '${numbers![index]}',
+            style: numberStyle == null ?
+            TextStyle(
+              fontSize: stepRadius / 1.1,
+              color: Colors.black,
+            ): numberStyle!.copyWith(
+              fontSize: stepRadius / 1.1,
+            ),
+          ),
         ),
       );
     });
